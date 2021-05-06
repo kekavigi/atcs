@@ -1,5 +1,6 @@
 #Import necessary libraries
 from flask import Flask, render_template, Response
+import cv2
 
 #Initialize the Flask app
 app = Flask(__name__)
@@ -22,9 +23,10 @@ def gen_frames(location):
             # concat frame one by one and show result
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n') 
-  
+ 
+@app.route('/')
 @app.route('/<location>')
-def index(location):
+def index(location=None):
     if not location: location = 'PasirKalikiIP'
     return render_template('index.html', atcs=atcs, location=location)
 
